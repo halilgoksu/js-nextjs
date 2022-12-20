@@ -1,4 +1,4 @@
-import { auth } from "../utils/firebase";
+import { auth, db } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import message from "../components/message";
+import Message from "../components/message";
 import { BsTrash2Fill } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default function Dashboard() {
     if (!user) return route.push("/auth/login");
 
     const collectionRef = collection(db, "posts");
-    const q = query(collectionRef, where("user", "==", user.id));
+    const q = query(collectionRef, where("user", "==", user.uid));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
@@ -49,22 +49,22 @@ export default function Dashboard() {
       <div>
         {posts.map((post) => {
           return (
-            <message {...post} key={post.id}>
+            <Message {...post} key={post.id}>
               <div className="flex gap-4">
                 <button
                   onClick={() => deletePost(post.id)}
                   className="text-pink-600 flex items-center justify-center gap-2 py-2 text-sm"
                 >
-                  <BsTrash2Fill></BsTrash2Fill>Delete
+                  <BsTrash2Fill className="text-2xl" /> Delete
                 </button>
-                <Link href={{ pathname: "/posts", query: post }}>
+                <Link href={{ pathname: "/post", query: post }}>
                   <button className="text-teal-600 flex items-center justify-center gap-2 py-2 text-sm">
-                    <AiFillEdit className="text-2xl"></AiFillEdit>
+                    <AiFillEdit className="text-2xl" />
                     Edit
                   </button>
                 </Link>
               </div>
-            </message>
+            </Message>
           );
         })}
       </div>
@@ -72,7 +72,7 @@ export default function Dashboard() {
         className="font-medium text-white bg-gray-800 py-2 px-4 my-6"
         onClick={() => auth.signOut()}
       >
-        Sing out
+        Sign out
       </button>
     </div>
   );

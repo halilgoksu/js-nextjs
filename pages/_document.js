@@ -1,5 +1,8 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
+
+//next js in bir vergisi fonlarimizi direk buryaa yapistirrabiliriz 
+
 export default function Document() {
   return (
     <Html>
