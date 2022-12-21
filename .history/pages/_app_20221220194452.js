@@ -1,6 +1,5 @@
 import "../styles/globals.css";
-import Layout from "../components/layout";
-
+import Layout fr
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
