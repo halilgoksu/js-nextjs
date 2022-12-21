@@ -8,9 +8,6 @@ function MyApp({ Component, pageProps }) {
     <Layout>
       <ToastContainer limit={1} />
       <Component {...pageProps} />
-      {/* -burdalki layoutun {chilren} ile ayni sey 
-      hangi component render edilirse ona childrern olur  */}
-
     </Layout>
   );
 }
